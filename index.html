@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta >Document</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="./dood.js"></script>
+	</head>
+	<body id="main" router-replace>
+		<label>Divider:<input type="number" model="divider" /></label>
+		<div text="'current divider is: '+divider"></div>
+		<div text="count">static</div>
+		<div show="count % divider == 0" 
+		text="'divideable by: '+divider"></div>
+		<div id="test"></div>
+		<script ignore defer>
+			let data = init({
+				count: 0,
+				divider: 3,
+			});
+			window.data = data;
+			setInterval(() => data.count++, 1000);
+		</script>
+	</body>
+</html>
