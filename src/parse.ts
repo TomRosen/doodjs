@@ -1,6 +1,4 @@
-import { DoodVariables } from './init';
-
-import { DirectiveData, DoodVariable } from './typedef';
+import { DirectiveData } from './typedef';
 
 export const parse_attribute = (
 	el: Element,
@@ -8,7 +6,7 @@ export const parse_attribute = (
 	data: Object
 ) => {
 	attribute = attribute || '';
-	let map: Map<DoodVariable, DirectiveData> = new Map();
+	let map: Map<string, DirectiveData> = new Map();
 	let used_attributes: string[] = [];
 	// @ts-ignore
 	let test_data = new Proxy(data, {
@@ -19,13 +17,13 @@ export const parse_attribute = (
 		},
 	});
 
-	eval(`with(test_data){${attribute}}`);
+	// eval(`with(test_data){${attribute}}`);
+	//call the function with the data as the context
+	//this is a hacky way to get the used variables
+	//but it works
+	new Function('with(this){' + attribute + '}').call(test_data);
 	for (let att of used_attributes) {
-		let dvar: DoodVariable | undefined = DoodVariables.find(
-			(dvar) => dvar.name == att
-		);
-		if (!dvar) continue;
-		map.set(dvar, {
+		map.set(att, {
 			node: el,
 			value: attribute,
 		});
