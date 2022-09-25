@@ -17,10 +17,6 @@ export const parse_attribute = (
 		},
 	});
 
-	// eval(`with(test_data){${attribute}}`);
-	//call the function with the data as the context
-	//this is a hacky way to get the used variables
-	//but it works
 	new Function('with(this){' + attribute + '}').call(test_data);
 	for (let att of used_attributes) {
 		map.set(att, {

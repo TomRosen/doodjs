@@ -13,6 +13,7 @@ export const walkDOM = (
 	let data: Object = { ...dood_data }; //convert proxy to object, maybe there is a better way, must be tested
 	var loop = function (main: Element | null) {
 		do {
+			console.log(main);
 			if (main === null) return;
 			if (main.nodeType != 1) continue;
 			if (main.hasAttribute('ignore')) continue;
