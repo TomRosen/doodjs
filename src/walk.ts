@@ -13,7 +13,6 @@ export const walkDOM = (
 	let data: Object = { ...dood_data }; //convert proxy to object, maybe there is a better way, must be tested
 	var loop = function (main: Element | null) {
 		do {
-			console.log(main);
 			if (main === null) return;
 			if (main.nodeType != 1) continue;
 			if (main.hasAttribute('ignore')) continue;
@@ -31,11 +30,6 @@ export const walkDOM = (
 							if (name === 'model') {
 								addModelEventListener(<HTMLElement>main!, key, dood_data);
 							}
-							/* if (!arr.has(key)) arr.set(key, new Map());
-							//if (att == 'model') addModelEvent(main, key, dood_data);
-							let map = arr.get(key);
-							if (!map!.has(dir)) map!.set(dir, [value]);
-							else map!.get(dir)!.push(value); */
 						}
 					);
 				}

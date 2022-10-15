@@ -9,7 +9,7 @@ import { effect } from './effect';
 import { html } from './html';
 import { d_if } from './if';
 
-export let directives: Directive[] = [
+export const directives: Directive[] = [
 	{
 		name: 'model',
 		fn: model,

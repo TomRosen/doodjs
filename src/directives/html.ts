@@ -1,9 +1,9 @@
 import { run } from '../run';
 
-import { DirectiveData } from '../typedef';
+import { DirectiveContext } from '../typedef';
 
 // @ts-ignore
-export const html = (data: DirectiveData, target: Object) => {
-	const { node, value } = data;
+export const html = (ctx: DirectiveContext, target: Object) => {
+	const { node, value } = ctx;
 	(<HTMLElement>node).innerHTML = run(target, `return ${value}`, node);
 };
