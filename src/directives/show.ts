@@ -1,12 +1,12 @@
-import { run } from '../run';
-import { DirectiveData } from '../typedef';
+import { DirectiveContext } from '../typedef';
+import { createEffect } from '../effect';
 
-// @ts-ignore
-export const show = (data: DirectiveData, target: Object) => {
-	const { node, value } = data;
-	if (run(target, `return ${value}`, node)) {
-		(<HTMLElement>node).style.display = 'block';
-	} else {
-		(<HTMLElement>node).style.display = 'none';
-	}
+export const show = ({ el, run, expr }: DirectiveContext) => {
+	createEffect(() => {
+		if (run(`return ${expr}`)) {
+			(<HTMLElement>el).style.display = 'block';
+		} else {
+			(<HTMLElement>el).style.display = 'none';
+		}
+	});
 };

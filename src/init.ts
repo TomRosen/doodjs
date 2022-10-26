@@ -1,7 +1,7 @@
 import { walkDOM } from './walk';
 import { trigger, track } from './effect';
 
-import { DoodVariable, DoodData, effect } from './typedef';
+import { DoodData, effect } from './typedef';
 
 // @ts-ignore
 interface InitOptions {
@@ -10,22 +10,14 @@ interface InitOptions {
 	onUnmount?: (el: HTMLElement) => void;
 }
 
-export let variable_map: Map<string, DoodVariable> = new Map();
-
 export let effect_map: WeakMap<
 	Object,
 	Map<string, Set<effect>>
 > = new WeakMap();
 
-export const init = (data: Object) => {
-	Object.entries(data).forEach(([key, value]) => {
-		variable_map.set(key, {
-			name: key,
-			initial: value,
-			value: value,
-		});
-	});
+export let refs: Map<string, Element> = new Map();
 
+export const init = (data: Object) => {
 	effect_map.set(data, new Map());
 
 	const dood_data: DoodData = new Proxy(data, {

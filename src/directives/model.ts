@@ -1,9 +1,9 @@
-import { run } from '../run';
+import { DirectiveContext } from '../typedef';
+import { createEffect } from '../effect';
 
-import { DirectiveData } from '../typedef';
-
-// @ts-ignore
-export const model = (data: DirectiveData, target: Object) => {
-	const { node, value } = data;
-	(<HTMLInputElement>node).value = run(target, `return ${value}`, node);
+export const model = ({ el, run, expr }: DirectiveContext) => {
+	//add Eventlistener here
+	createEffect(() => {
+		(<HTMLInputElement>el).value = run(`return ${expr}`);
+	});
 };

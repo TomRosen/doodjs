@@ -1,9 +1,8 @@
-import { run } from '../run';
-
 import { DirectiveContext } from '../typedef';
+import { createEffect } from '../effect';
 
-// @ts-ignore
-export const html = (ctx: DirectiveContext, target: Object) => {
-	const { node, value } = ctx;
-	(<HTMLElement>node).innerHTML = run(target, `return ${value}`, node);
+export const html = ({ el, run, expr }: DirectiveContext) => {
+	createEffect(() => {
+		(<HTMLElement>el).innerHTML = run(`return ${expr}`);
+	});
 };

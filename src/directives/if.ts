@@ -1,12 +1,12 @@
-import { DirectiveData } from '../typedef';
+import { DirectiveContext } from '../typedef';
 
 // @ts-ignore
-export const d_if = (data: DirectiveData, target: Object) => {
-	const { node, value } = data;
-	const result = eval(`with(target) { ${value} }`);
+export const d_if = (ctx: DirectiveContext) => {
+	const { el, expr } = ctx;
+	const result = eval(`with(target) { ${expr} }`);
 	if (result) {
-		(<HTMLElement>node).style.display = 'block';
+		(<HTMLElement>el).style.display = 'block';
 	} else {
-		(<HTMLElement>node).style.display = 'none';
+		(<HTMLElement>el).style.display = 'none';
 	}
 };

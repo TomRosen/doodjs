@@ -1,7 +1,8 @@
-import { DirectiveData } from '../typedef';
+import { DirectiveContext } from '../typedef';
+import { createEffect } from '../effect';
 
-// @ts-ignore
-export const effect = (data: DirectiveData, target: Object) => {
-	const { value } = data;
-	eval(`with(target) { ${value} }`);
+export const effect = ({ run }: DirectiveContext) => {
+	createEffect(() => {
+		run();
+	});
 };
