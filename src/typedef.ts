@@ -1,18 +1,18 @@
 export interface Directive {
-  name: string;
-  fn: (ctx: DirectiveContext, target?: Object) => void;
+	name: string;
+	fn: (ctx: DirectiveContext, target?: Object) => void;
 }
 
 export interface DoodData {
-  [key: string]: any;
+	[key: string]: any;
 }
 
 export interface DirectiveContext {
-  el: Element;
-  expr: string;
-  args?: string[];
-  modiefiers?: Record<string, boolean>;
-  run: (target?: Object, e?: string) => any;
+	el: Element;
+	expr: string;
+	args?: string[];
+	modiefiers?: Record<string, boolean>;
+	run: (expression?: string) => any;
 }
 
 export type effect = () => void;
