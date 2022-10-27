@@ -1,6 +1,6 @@
 export interface Directive {
 	name: string;
-	fn: (ctx: DirectiveContext, target?: Object) => void;
+	fn: (ctx: DirectiveContext, target?: DoodData) => void;
 }
 
 export interface DoodData {
