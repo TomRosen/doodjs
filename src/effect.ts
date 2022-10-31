@@ -6,8 +6,7 @@ let currentEffect: effect | null = null;
 const getSubscribers = (target: Object, key: string) => {
 	if (!effect_map.has(target)) {
 		effect_map.set(target, new Map());
-	}
-	if (!effect_map.get(target)?.has(key)) {
+	} else if (!effect_map.get(target)?.has(key)) {
 		effect_map.get(target)?.set(key, new Set());
 	}
 	return effect_map.get(target)?.get(key);
@@ -27,7 +26,7 @@ export const trigger = (target: Object, key: string) => {
 export const createEffect = (fn: () => any) => {
 	const effect = () => {
 		currentEffect = effect;
-		fn(); //runs directive function
+		fn(); //runs directive effect
 		currentEffect = null;
 	};
 	effect();

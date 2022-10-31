@@ -1,6 +1,6 @@
 export interface Directive {
 	name: string;
-	fn: (ctx: DirectiveContext, target?: DoodData) => void;
+	fn: (ctx: DirectiveContext, target: DoodData) => void;
 }
 
 export interface DoodData {
@@ -10,8 +10,8 @@ export interface DoodData {
 export interface DirectiveContext {
 	el: Element;
 	expr: string;
-	args?: string[];
-	modiefiers?: Record<string, boolean>;
+	arg?: string;
+	modiefiers?: string[];
 	run: (expression?: string) => any;
 }
 

@@ -8,13 +8,18 @@
 		<!-- <script src="./src/main.ts" type="module"></script> -->
 	</head>
 	<body id="main" router-replace>
-		<label>Divider:<input type="number" model="divider" /></label>
-		<div text="'current divider is: '+divider"></div>
-		<div text="count">static</div>
+		<label>Divider:<input type="number" d-model="divider" /></label>
+		<div d-text:test.prevent.yo="'current divider is: '+divider"></div>
+		<div d-text="count" d-effect="$refs.test.innerText = count">static</div>
+		<div d-if="count % divider == 0" d-text="'divideable by: '+divider"></div>
+		<div
+			d-else-if="count % (divider-1) == 0"
+			d-text="'divieable by: '+(divider-1)"
+		></div>
+		<div d-else>Not divideable</div>
+		<div d-ref="test"></div>
 
-		<div show="count % divider == 0" text="'divideable by: '+divider">fill</div>
-
-		<script type="module" ignore defer>
+		<script type="module" d-ignore defer>
 			import { init } from './src/main.ts';
 			let time = performance.now();
 			let data = init({

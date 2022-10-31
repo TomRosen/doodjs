@@ -3,6 +3,8 @@ import { createContext } from './context';
 
 import { Directive, DoodData, DirectiveContext } from './typedef';
 
+let directive_func: Array<Function> = [];
+
 export const walkDOM = (
 	main: Element,
 	dood_data: DoodData //proxy
@@ -11,21 +13,26 @@ export const walkDOM = (
 		do {
 			if (main === null) return;
 			if (main.nodeType != 1) continue;
-			if (main.hasAttribute('ignore')) continue;
+			if (main.hasAttribute('d-ignore')) continue;
 
-			directives.forEach((dir: Directive) => {
-				const { name } = dir;
-				if (main!.hasAttribute(name)) {
-					let ctx: DirectiveContext = createContext(
-						main!,
-						main!.getAttribute(name)!,
-						dood_data
+			main.getAttributeNames().forEach((attr) => {
+				if (attr.startsWith('d-')) {
+					let ctx: DirectiveContext = createContext(main!, attr, dood_data);
+					let directive: Directive | undefined = directives.find((directive) =>
+						attr.startsWith(directive.name)
 					);
-					dir.fn(ctx, dood_data);
+					if (directive) {
+						if (directive.name == 'd-ref') {
+							directive_func.unshift(() => directive!.fn(ctx, dood_data));
+						} else {
+							directive_func.push(() => directive!.fn(ctx, dood_data));
+						}
+					}
 				}
 			});
-			if (main.hasChildNodes() && main != null) loop(main.firstElementChild);
+			if (main!.hasChildNodes() && main != null) loop(main.firstElementChild);
 		} while (main != null && (main = main.nextElementSibling));
 	};
 	loop(main);
+	directive_func.forEach((func) => func());
 };

@@ -3,15 +3,17 @@ import { run } from './run';
 
 export const createContext = (
 	el: Element,
-	expr: string,
+	attr: string,
 	target: Object
 ): DirectiveContext => {
-	const ctx: DirectiveContext = {
+	let arg = attr.match(/:(.*?)(?=\.)|:(.*)$/)?.[1];
+	let modiefiers = attr.match(/\.([a-z]+)/g)?.map((mod) => mod.slice(1));
+	return {
 		el,
-		expr,
-		run: (expression: string = expr) => {
-			return run(target, expression, el);
-		}, //run needs the target
+		expr: el.getAttribute(attr)!,
+		arg: arg || '',
+		modiefiers: modiefiers || [],
+		run: (expression?: string) =>
+			run(target, expression || el.getAttribute(attr)!, el),
 	};
-	return ctx;
 };
