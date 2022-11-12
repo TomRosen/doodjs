@@ -9,8 +9,8 @@
 	</head>
 	<body id="main" router-replace>
 		<label>Divider:<input type="number" d-model="divider" /></label>
-		<div d-text:test.prevent.yo="'current divider is: '+divider"></div>
-		<div d-text="count" d-effect="$refs.test.innerText = count">static</div>
+		<div d-text:test.prevent="'current divider is: '+divider"></div>
+		<div d-text="count">static</div>
 		<div d-if="count % divider == 0" d-text="'divideable by: '+divider"></div>
 		<div
 			d-else-if="count % (divider-1) == 0"
@@ -18,6 +18,7 @@
 		></div>
 		<div d-else>Not divideable</div>
 		<div d-ref="test"></div>
+		<button d-on:mouseenter="$el.innerText = count">+</button>
 
 		<script type="module" d-ignore defer>
 			import { init } from './src/main.ts';

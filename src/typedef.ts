@@ -12,7 +12,7 @@ export interface DirectiveContext {
 	expr: string;
 	arg?: string;
 	modiefiers?: string[];
-	run: (expression?: string) => any;
+	run: (expression?: string, event?: Event) => any;
 }
 
 export type effect = () => void;

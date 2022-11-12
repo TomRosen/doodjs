@@ -1,9 +1,10 @@
 import { createEffect } from '../effect';
 import { DirectiveContext } from '../typedef';
+import { getAttribute } from '../helper/getAttribute';
 
 interface ConditionContext {
 	el: Element;
-	exp?: string;
+	expr?: string;
 }
 
 // @ts-ignore
@@ -18,13 +19,13 @@ export const d_if = (ctx: DirectiveContext) => {
 	const comment = document.createComment('d-if');
 	parent.insertBefore(comment, el);
 
-	const conditionContexts: ConditionContext[] = [{ el, exp: expr }];
+	const conditionContexts: ConditionContext[] = [{ el, expr: expr }];
 	let elseEl: Element | null = null;
 	while ((elseEl = el.nextElementSibling)) {
 		if (elseEl.hasAttribute('d-else') || elseEl.hasAttribute('d-else-if')) {
 			conditionContexts.push({
 				el: elseEl,
-				exp: elseEl.getAttribute('d-else-if') || undefined,
+				expr: getAttribute(elseEl, 'd-else-if'),
 			});
 			parent.removeChild(elseEl);
 		} else {
@@ -42,7 +43,7 @@ export const d_if = (ctx: DirectiveContext) => {
 
 	createEffect(() => {
 		for (let i = 0; i < conditionContexts.length; i++) {
-			const { el, exp } = conditionContexts[i];
+			const { el, expr: exp } = conditionContexts[i];
 			if (!exp || ctx.run(`return ${exp}`)) {
 				if (activeConditionContext !== i) {
 					removeActiveCondition();
@@ -52,7 +53,6 @@ export const d_if = (ctx: DirectiveContext) => {
 				return;
 			}
 			removeActiveCondition();
-			activeConditionContext = -1;
 		}
 	});
 };
