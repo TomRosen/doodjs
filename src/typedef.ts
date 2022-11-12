@@ -11,8 +11,8 @@ export interface DirectiveContext {
 	el: Element;
 	expr: string;
 	arg?: string;
-	modiefiers?: string[];
-	run: (expression?: string, event?: Event) => any;
+	modifiers?: string[];
+	run: (expression?: string) => any;
 }
 
 export type effect = () => void;
