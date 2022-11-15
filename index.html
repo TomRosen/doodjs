@@ -17,7 +17,7 @@
 			d-text="'divieable by: '+(divider-1)"
 		></div>
 		<div d-else>Not divideable</div>
-		<div d-ref="test"></div>
+		<div d-ref="test" d-bind:class="divider == 3 ? 'yes' : 'no'"></div>
 		<button d-on:click.alt="$el.innerText = count;console.log($event)">
 			+
 		</button>
