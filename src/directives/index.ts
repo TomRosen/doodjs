@@ -9,6 +9,7 @@ import { effect } from './effect';
 import { html } from './html';
 import { d_if } from './if';
 import { on } from './on';
+import { d_for } from './for';
 
 export const directives: Directive[] = [
 	{
@@ -46,5 +47,9 @@ export const directives: Directive[] = [
 	{
 		name: 'd-on',
 		fn: on,
+	},
+	{
+		name: 'd-for',
+		fn: d_for,
 	},
 ];
