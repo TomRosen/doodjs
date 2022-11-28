@@ -1,3 +1,7 @@
+# WIP
+
+Documentation my be incomplete or inaccurate.
+
 # dood
 
 A simple JavaScript framework to add functionality to your HTML elements.
