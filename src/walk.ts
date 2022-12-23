@@ -21,7 +21,7 @@ export const walkDOM = (
 					let directive: Directive | undefined = directives.find((directive) =>
 						attr.startsWith(directive.name)
 					);
-					if (directive) {
+					if (directive !== undefined) {
 						if (directive.name == 'd-ref') {
 							directive_func.unshift(() => directive!.fn(ctx, dood_data));
 						} else {

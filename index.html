@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<title>Document</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<!-- <script src="./src/main.ts" type="module"></script> -->
-	</head>
-	<body id="main" router-replace>
-		<label>Divider:<input type="number" d-model="divider" /></label>
-		<div d-text:test.prevent="'current divider is: '+divider"></div>
-		<div d-text="count">static</div>
-		<div d-if="count % divider == 0" d-text="'divideable by: '+divider"></div>
-		<div
-			d-else-if="count % (divider-1) == 0"
-			d-text="'divieable by: '+(divider-1)"
-		></div>
-		<div d-else>Not divideable</div>
-		<div
-			d-ref="test"
-			d-bind:class="{divider: divider == 3 ? 'hey' : 'no', 'divider-2': divider == 2}"
-		></div>
-		<button d-on:click.alt="$el.innerText = count;console.log($event)">
-			+
-		</button>
-		<form action="">
-			<button d-on:click="">Submit</button>
-		</form>
-		<script type="module" d-ignore defer>
-			import { init } from './src/main.ts';
-			let time = performance.now();
-			let data = init({
-				count: 0,
-				divider: 3,
-			});
-			console.log('init time: ', performance.now() - time);
-			window.data = data;
-			setInterval(() => data.count++, 1000);
-		</script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="./src/main.ts" type="module"></script> -->
+  </head>
+  <body id="main" router-replace>
+    <label>Divider:<input type="number" d-model="divider" /></label>
+    <div d-text:test.prevent="'current divider is: '+divider"></div>
+    <div d-text="count">static</div>
+    <div d-if="count % divider == 0" d-text="'divideable by: '+divider"></div>
+    <div
+      d-else-if="count % (divider-1) == 0"
+      d-text="'divieable by: '+(divider-1)"
+    ></div>
+    <div d-else>Not divideable</div>
+    <div
+      d-ref="test"
+      d-bind:class="{divider: divider == 3 ? 'hey' : 'no', 'divider-2': divider == 2}"
+    ></div>
+
+    <button d-on:click.alt="$el.innerText = count;console.log($event)">
+      +
+    </button>
+    <form action="">
+      <button d-on:click="">Submit</button>
+    </form>
+    <script type="module" d-ignore defer>
+      import { init } from "./src/main.ts";
+      let time = performance.now();
+      let data = init({
+        count: 0,
+        divider: 3,
+        arr: [1, 2, 3],
+      });
+      console.log("init time: ", performance.now() - time);
+      window.data = data;
+      setInterval(() => data.count++, 1000);
+    </script>
+  </body>
 </html>

@@ -10,7 +10,7 @@ interface ConditionContext {
 // @ts-ignore
 export const d_if = (ctx: DirectiveContext) => {
 	const { el, expr } = ctx;
-	if (!expr.trim()) {
+	if (expr.trim() === '') {
 		console.error(`Expression in if directive is empty`);
 		return;
 	}
@@ -44,7 +44,7 @@ export const d_if = (ctx: DirectiveContext) => {
 	createEffect(() => {
 		for (let i = 0; i < conditionContexts.length; i++) {
 			const { el, expr: exp } = conditionContexts[i];
-			if (!exp || ctx.run(`return ${exp}`)) {
+			if (exp === undefined /* was !exp */ || ctx.run(`return ${exp}`)) {
 				if (activeConditionContext !== i) {
 					removeActiveCondition();
 					parent.replaceChild(el, comment);

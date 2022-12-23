@@ -6,7 +6,7 @@ export const on = ({ el, expr, arg, run, modifiers }: DirectiveContext) => {
 	let func = (event: Event) => {
 		for (const key of modifiers!) {
 			const mod = eventModifiers[key];
-			if (mod && mod(event)) {
+			if (mod !== undefined && mod(event)) {
 				return;
 			}
 		}
