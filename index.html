@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Document</title>
+    <title d-text="'hey'">Document</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- <script src="./src/main.ts" type="module"></script> -->
   </head>
@@ -11,7 +11,7 @@
     <label>Divider:<input type="number" d-model="divider" /></label>
     <div d-text:test.prevent="'current divider is: '+divider"></div>
     <div d-text="count">static</div>
-    <div d-if="count % divider == 0" d-text="'divideable by: '+divider"></div>
+    <!-- <div d-if="count % divider == 0" d-text="'divideable by: '+divider"></div> -->
     <div
       d-else-if="count % (divider-1) == 0"
       d-text="'divieable by: '+(divider-1)"
@@ -20,7 +20,35 @@
     <div
       d-ref="test"
       d-bind:class="{divider: divider == 3 ? 'hey' : 'no', 'divider-2': divider == 2}"
+    >
+      <a d-text="'hey'"></a>
+    </div>
+    <div
+      d-ref="test2"
+      d-bind:class="['divider', 'divider-2']"
+      d-text="arr"
     ></div>
+
+    <input
+      type="text"
+      d-model="inputText"
+      d-on:keypress.ctrl="if($event.key == 'Enter') todos.push(inputText)"
+    />
+    <button d-on:click="todos.push(inputText)">Add Todo</button>
+
+    <ol d-for="todo in todos">
+      <li d-text="todo"></li>
+    </ol>
+
+    <div id="test">
+      <div d-text="test"></div>
+    </div>
+
+    <div d-text="count"></div>
+    <button d-on:click.alt="$el.innerText = count;console.log($event)">
+      +
+    </button>
+    <div d-init="console.log(count)"></div>
 
     <button d-on:click.alt="$el.innerText = count;console.log($event)">
       +
@@ -35,9 +63,12 @@
         count: 0,
         divider: 3,
         arr: [1, 2, 3],
+        todos: ["make stuff"],
+        inputText: "",
       });
       console.log("init time: ", performance.now() - time);
       window.data = data;
+      console.log(data);
       setInterval(() => data.count++, 1000);
     </script>
   </body>

@@ -17,6 +17,8 @@ export let effect_map: WeakMap<
 
 export let refs: Map<string, Element> = new Map();
 
+export let dood_data: DoodData = new Object();
+
 export const init = (data: Object) => {
   effect_map.set(data, new Map());
   let handler = {
@@ -24,7 +26,7 @@ export const init = (data: Object) => {
       if (key === "isProxy") return true;
       if (
         target[key as keyof Object] instanceof Object &&
-        // @ts-ignore
+        // @ts-ignore "should be changed"
         !target[key as keyof Object]?.isProxy
       ) {
         // @ts-ignore
@@ -44,7 +46,10 @@ export const init = (data: Object) => {
     },
   };
 
-  const dood_data: DoodData = new Proxy(data, handler);
-  walkDOM(document.body, dood_data);
+  dood_data = new Proxy(data, handler);
+  walkDOM(
+    /*document.body*/ document.querySelector("#main") ?? document.body,
+    dood_data
+  );
   return dood_data;
 };
