@@ -57,7 +57,7 @@ Will bind the value of the input to the value of `value`.
 ### `d-for`
 
 ```html
-<div d-for="item in items">
+<div d-for="item of items">
 	<div d-text="item"></div>
 </div>
 ```
