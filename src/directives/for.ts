@@ -2,12 +2,12 @@ import { DirectiveContext } from "../typedef";
 import { createEffect } from "../effect";
 import { walkDOM } from "../walk";
 import { dood_data } from "../init";
-import { set_from_list } from "../run";
+// import { set_from_list } from "../run";
 
 const forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
 
 export const d_for = (context: DirectiveContext) => {
-  const { el, expr } = context;
+  const { el, expr, run } = context;
 
   const childNodes = Array.from(el.childNodes);
   if (!childNodes.length) {
@@ -32,7 +32,8 @@ export const d_for = (context: DirectiveContext) => {
     const length = iterator.length;
     for (var i = 0; i < length; i++) {
       // Set the context for the new element
-      set_from_list(dood_data, alias, iteratorExpr, i);
+      // set_from_list(dood_data, alias, iteratorExpr, i);
+      run(`${alias} = ${iteratorExpr}[$args[0]]`, [i]);
       //to fix
       if (key) {
         context.run(`${alias}_key = ${key}[${i}]`);
