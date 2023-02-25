@@ -17,7 +17,8 @@ export const walkDOM = (
       if (main.hasAttribute("d-ignore")) continue;
 
       for (const attr of main.getAttributeNames()) {
-        if (!attr.startsWith("d-")) continue;
+        if (!attr.startsWith("d-") || attr == "d-else-if" || attr == "d-else")
+          continue;
         const ctx: DirectiveContext = createContext(main!, attr, dood_data);
         const directive: Directive | undefined = directives.find((directive) =>
           attr.startsWith(directive.name)

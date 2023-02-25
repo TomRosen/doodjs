@@ -32,7 +32,6 @@ export const d_for = (context: DirectiveContext) => {
     const length = iterator.length;
     for (var i = 0; i < length; i++) {
       // Set the context for the new element
-      // set_from_list(dood_data, alias, iteratorExpr, i);
       run(`${alias} = ${iteratorExpr}[$args[0]]`, [i]);
       //to fix
       if (key) {

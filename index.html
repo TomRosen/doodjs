@@ -11,7 +11,7 @@
     <label>Divider:<input type="number" d-model="divider" /></label>
     <div d-text:test.prevent="'current divider is: '+divider"></div>
     <div d-text="count">static</div>
-    <!-- <div d-if="count % divider == 0" d-text="'divideable by: '+divider"></div> -->
+    <div d-if="count % divider == 0" d-text="'divideable by: '+divider"></div>
     <div
       d-else-if="count % (divider-1) == 0"
       d-text="'divieable by: '+(divider-1)"
@@ -48,11 +48,7 @@
     <button d-on:click.alt="$el.innerText = count;console.log($event)">
       +
     </button>
-    <div d-init="console.log(count)"></div>
 
-    <button d-on:click.alt="$el.innerText = count;console.log($event)">
-      +
-    </button>
     <form action="">
       <button d-on:click="">Submit</button>
     </form>
