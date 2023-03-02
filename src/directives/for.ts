@@ -2,9 +2,9 @@ import { DirectiveContext } from "../typedef";
 import { createEffect } from "../effect";
 import { walkDOM } from "../walk";
 import { dood_data } from "../init";
-// import { set_from_list } from "../run";
 
 const forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
+const aliasKeyRE = /(?:\()?(.*?)(?:\))?,([^),]*)/;
 
 export const d_for = (context: DirectiveContext) => {
   const { el, expr, run } = context;
@@ -19,6 +19,12 @@ export const d_for = (context: DirectiveContext) => {
     throw new Error(`Invalid for expression: ${expr}`);
   }
   const [, alias, iteratorExpr] = parsed;
+
+  const aliasParsed = alias.match(aliasKeyRE);
+  if (aliasParsed !== null) {
+    var [, valueAlias, keyAlias] = aliasParsed;
+    run(`keys = ${iteratorExpr}.keys()`);
+  }
   let iterator: any[];
   let key: string;
   createEffect(() => {
@@ -32,10 +38,9 @@ export const d_for = (context: DirectiveContext) => {
     const length = iterator.length;
     for (var i = 0; i < length; i++) {
       // Set the context for the new element
-      run(`${alias} = ${iteratorExpr}[$args[0]]`, [i]);
-      //to fix
-      if (key) {
-        context.run(`${alias}_key = ${key}[${i}]`);
+      run(`${valueAlias || alias} = ${iteratorExpr}[$args[0]]`, [i]);
+      if (keyAlias) {
+        run(`${keyAlias} = keys.next().value`, [i]);
       }
 
       for (const node of childNodes) {
