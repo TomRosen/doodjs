@@ -55,3 +55,7 @@ export const directives: Directive[] = [
   },
   { name: "d-init", fn: init },
 ];
+
+export const addDirective = (directive: Directive[]) => {
+  directives.push(...directive);
+};

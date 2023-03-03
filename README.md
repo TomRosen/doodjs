@@ -1,60 +1,95 @@
-# WIP
+# DoodJS
 
-Documentation my be incomplete or inaccurate.
+<!--toc:start-->
 
-# dood
+- [DoodJS](#doodjs)
+  - [State](#state)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Options](#options)
+  - [Directives](#directives)
+    - [`d-text`](#d-text)
+    - [`d-html`](#d-html)
+    - [`d-show`](#d-show)
+    - [`d-model`](#d-model)
+    - [`d-for`](#d-for)
+    - [`d-if`](#d-if)
+    - [`d-on`](#d-on)
+    - [`d-bind`](#d-bind)
+    - [`d-ref`](#d-ref)
+    - [`d-effect`](#d-effect)
+    - [`d-ignore`](#d-ignore)
+  - [DoodJS variables](#doodjs-variables)
+  - [Modifiers](#modifiers)
+  - [Arguments](#arguments)
+  <!--toc:end-->
 
 A simple JavaScript framework to add functionality to your HTML elements.
 
-## Installation
+## State
 
-Run `npm i` to install the dependencies. \
-Run `npm run build` to build the project.
+- The framework is currently in a very early state.
+- Different scopes are currently not supported yet, just one scope will be created.
 
 ## Usage
 
+DoodJS can simply be loaded from CDN:
+
 ```javascript
-import { init } from '/dood.js';
+import { init } from 'cdn url';
 let dood = init({});
 ```
 
 Provide a object wich will contain your reactive data available in your HTML elements.
 
+### Options
+
+The `init` function can take a options object as a second argument.
+The following options are available:
+
+- **`root`** defines the root of DoodJS on the DOM. Standard query selector can be used.
+
+```javascript
+let dood = init({}, { root: '#main' });
+```
+
 ## Directives
 
 ### `d-text`
 
-```html
-<div d-text="message"></div>
-```
+Will set given value as elements innerText.
 
-Will display the value of `message` in the element.
+```html
+<div d-text="'Hello, World!'"></div>
+```
 
 ### `d-html`
 
-```html
-<div d-html="message"></div>
-```
+Will set given value as elements innerHTML.
 
-Will display the value of `message` in the element as HTML.
+```html
+<div d-html="myHTML"></div>
+```
 
 ### `d-show`
 
-```html
-<div d-show="showMessage"></div>
-```
+Will display the element if given expression is `true`.
 
-Will display the element if `showMessage` is `true`.
+```html
+<div d-show="count > 10"></div>
+```
 
 ### `d-model`
 
+Will bind the value of the input to the value of the given variable.
+
 ```html
-<input type="text" d-model="value" />
+<input type="text" d-model="myInput" />
 ```
 
-Will bind the value of the input to the value of `value`.
-
 ### `d-for`
+
+Will render list of elements. The loop can contain multiple HTML elements.
 
 ```html
 <div d-for="item of items">
@@ -62,9 +97,19 @@ Will bind the value of the input to the value of `value`.
 </div>
 ```
 
-Will display the element for each item in `items`.
+`d-for` can also itterate also over the keys of the given object.
+
+```html
+<div d-for="(item,key) of items"
+  <div d-text="'Key: '+key"></div>
+  <div d-text="'Item: '+item"></div>
+</div>
+```
 
 ### `d-if`
+
+Will display the element if expression is `true`.
+The difference to `d-show` is that the element will be removed from the DOM if the expression is `false`.
 
 ```html
 <div d-if="showMessage">
@@ -72,62 +117,58 @@ Will display the element for each item in `items`.
 </div>
 ```
 
-Will display the element if `showMessage` is `true`.
-The difference to `d-show` is that the element will be removed if `showMessage` is `false`.
-
 ### `d-on`
+
+Will add an event handler with the given function.
+Modifiers and Arguments are supported.
 
 ```html
 <button d-on:click="clickHandler">Click me</button>
 ```
 
-Will call the function `clickHandler` when the button is clicked.
-Arguments and Modifiers are supported.
-
 ### `d-bind`
+
+Will bind given value the specefied propertie of the element.
 
 ```html
 <div d-bind:class="class"></div>
+<div d-bind:style="{color: error ? 'Red' : 'Green'}"
 ```
-
-Will bind the value of `class` to the class attribute of the element.
 
 ### `d-ref`
 
-```html
-<div d-ref="tag"></div>
-```
-
-Will add the element to the `refs` object.\
+Will add the element to the `refs`.\
 Element will be available via `$refs.tag`.
 
+```html
+<div d-ref="tag"></div>
+<div d-effect="$refs.tag.innerText = 'Hello, World!'"
+```
+
 ### `d-effect`
+
+Will re-run the effect when the value of parameters changes.
 
 ```html
 <div d-effect="$el.innerText = message"></div>
 ```
 
-Will re-run the effect when the value of parameters changes.
-
 ### `d-ignore`
+
+Elements with the `d-ignore` directive will be ignored by DoodJS.
 
 ```html
 <div d-ignore></div>
 ```
 
-Elements with the `d-ignore` directive will be ignored by dood.
+## DoodJS variables
 
-## Arguments
+There are a list of variables that are available in all directive functions.
 
-```html
-<button d-on:click="clickHandler($event, $el)">Click me</button>
-```
-
-`$event` will contain the event object.\
-`$el` will contain the element.
+- `$el` can be used to access the current element.
+- The `$refs` object can be used to access all elements referenced by `d-ref`.
+- The `$args` array contains contains all arguments provided by directive, if any.
 
 ## Modifiers
 
-```html
-<button d-on:click.stop="clickHandler">Click me</button>
-```
+## Arguments

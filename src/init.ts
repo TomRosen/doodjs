@@ -1,7 +1,8 @@
 import { walkDOM } from "./walk";
 import { trigger, track } from "./effect";
 
-import { DoodData, effect } from "./typedef";
+import { DoodData, effect, Plugin } from "./typedef";
+import { addDirective } from "./directives";
 
 // @ts-ignore
 interface InitOptions {
@@ -47,9 +48,10 @@ export const init = (data: Object) => {
   };
 
   dood_data = new Proxy(data, handler);
-  walkDOM(
-    /*document.body*/ document.querySelector("#main") ?? document.body,
-    dood_data
-  );
+  walkDOM(document.querySelector("#main") ?? document.body, dood_data);
   return dood_data;
+};
+
+export const plugin = (plugin: Plugin) => {
+  addDirective(plugin.directives);
 };

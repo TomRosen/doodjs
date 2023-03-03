@@ -1,1 +1,1 @@
-export { init } from "./init";
+export { init, plugin } from "./init";

@@ -15,4 +15,9 @@ export interface DirectiveContext {
   run: (expression?: string, args?: Array<any>) => any;
 }
 
+export interface Plugin {
+  name: string;
+  directives: Directive[];
+}
+
 export type effect = () => void;
