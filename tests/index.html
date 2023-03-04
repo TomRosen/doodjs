@@ -33,6 +33,7 @@
       type="text"
       d-model="inputText"
       d-on:keypress.ctrl="if($event.key == 'Enter') todos.push(inputText)"
+      d-bind:placeholder="'Placeholder text'"
     />
     <button d-on:click="todos.push(inputText)">Add Todo</button>
 
@@ -52,8 +53,13 @@
     <form action="">
       <button d-on:click="">Submit</button>
     </form>
+    <input type="checkbox" value="red" d-model="colors" />
+    <input type="checkbox" value="orange" d-model="colors" />
+    <input type="checkbox" value="yellow" d-model="colors" />
+
+    Colors: <span d-text="colors" d-effect="console.log(colors)"></span>
     <script type="module" d-ignore defer>
-      import { init } from "./src/main.ts";
+      import { init } from "../src/main.ts";
       let time = performance.now();
       let data = init({
         count: 0,
@@ -61,6 +67,7 @@
         arr: [1, 2, 3],
         todos: ["make stuff"],
         inputText: "",
+        colors: [],
       });
       console.log("init time: ", performance.now() - time);
       window.data = data;

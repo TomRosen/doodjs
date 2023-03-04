@@ -4,9 +4,9 @@
 
 - [DoodJS](#doodjs)
   - [State](#state)
-  - [Installation](#installation)
   - [Usage](#usage)
     - [Options](#options)
+    - [Build from source](#build-from-source)
   - [Directives](#directives)
     - [`d-text`](#d-text)
     - [`d-html`](#d-html)
@@ -35,8 +35,17 @@ A simple JavaScript framework to add functionality to your HTML elements.
 
 DoodJS can simply be loaded from CDN:
 
+```html
+<script src="https://unpkg.com/doodjs"></script>
+<script>
+  let dood = Dood.init({});
+</script>
+```
+
+or as a module:
+
 ```javascript
-import { init } from 'cdn url';
+import { init } from "https://unpkg.com/doodjs?module";
 let dood = init({});
 ```
 
@@ -50,8 +59,14 @@ The following options are available:
 - **`root`** defines the root of DoodJS on the DOM. Standard query selector can be used.
 
 ```javascript
-let dood = init({}, { root: '#main' });
+let dood = init({}, { root: "#main" });
 ```
+
+### Build from source
+
+- Clone this repository.
+- Run `npm install` and `npm run build`.
+- The script is now available in the `dist/dood.js`.
 
 ## Directives
 
@@ -93,7 +108,7 @@ Will render list of elements. The loop can contain multiple HTML elements.
 
 ```html
 <div d-for="item of items">
-	<div d-text="item"></div>
+  <div d-text="item"></div>
 </div>
 ```
 
@@ -113,7 +128,7 @@ The difference to `d-show` is that the element will be removed from the DOM if t
 
 ```html
 <div d-if="showMessage">
-	<div d-text="message"></div>
+  <div d-text="message"></div>
 </div>
 ```
 

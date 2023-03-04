@@ -1,10 +1,34 @@
 {
-  "name": "dood",
-  "private": true,
+  "name": "doodjs",
   "version": "0.0.0",
+  "description": "A lightweight client-side JavaScript framework for adding interactivity to HTML markup via element attributes",
+  "homepage": "https://github.com/tomrosen/dood#readme",
+  "repository": "github:tomrosen/dood",
+  "bugs": {
+    "url": "https://github.com/TomRosen/dood/issues"
+  },
+  "license": "MIT",
+  "author": "Tom Rosen <dev@tomrosen.de>",
+  "keywords": [
+    "javascript",
+    "web",
+    "webframework"
+  ],
+  "files": [
+    "dist"
+  ],
+  "browser": "dist/dood.iife.js",
+  "unpkg": "dist/dood.iife.js",
+  "module": "dist/dood.js",
+  "exports": {
+    ".": {
+      "import": "./dist/dood.js",
+      "require": "./dist/dood.umd.cjs"
+    }
+  },
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite ",
     "build": "vite build --config vite.config.js",
     "preview": "vite preview"
   },
