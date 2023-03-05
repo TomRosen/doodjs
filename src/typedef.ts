@@ -20,4 +20,10 @@ export interface Plugin {
   directives: Directive[];
 }
 
+export interface InitOptions {
+  root?: Element;
+  onMount?: (el: HTMLElement) => void;
+  onUnmount?: (el: HTMLElement) => void;
+}
+
 export type effect = () => void;

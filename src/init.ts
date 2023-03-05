@@ -1,15 +1,10 @@
 import { walkDOM } from "./walk";
 import { trigger, track } from "./effect";
 
-import { DoodData, effect, Plugin } from "./typedef";
+import { DoodData, effect, InitOptions, Plugin } from "./typedef";
 import { addDirective } from "./directives";
 
 // @ts-ignore
-interface InitOptions {
-  root?: Element;
-  onMount?: (el: HTMLElement) => void;
-  onUnmount?: (el: HTMLElement) => void;
-}
 
 export let effect_map: WeakMap<
   Object,
@@ -20,7 +15,7 @@ export let refs: Map<string, Element> = new Map();
 
 export let dood_data: DoodData = new Object();
 
-export const init = (data: Object) => {
+export const init = (data: Object, options: InitOptions) => {
   effect_map.set(data, new Map());
   let handler = {
     get: (target: Object, key: string): any => {
@@ -48,7 +43,7 @@ export const init = (data: Object) => {
   };
 
   dood_data = new Proxy(data, handler);
-  walkDOM(document.querySelector("#main") ?? document.body, dood_data);
+  walkDOM(options?.root ?? document.body, dood_data);
   return dood_data;
 };
 

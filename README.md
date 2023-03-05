@@ -46,7 +46,9 @@ or as a module:
 
 ```javascript
 import { init } from "https://unpkg.com/doodjs?module";
-let dood = init({});
+let dood = init({
+  yourData: value,
+});
 ```
 
 Provide a object wich will contain your reactive data available in your HTML elements.
