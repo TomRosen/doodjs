@@ -17,13 +17,13 @@
   "files": [
     "dist"
   ],
-  "browser": "dist/dood.iife.js",
-  "unpkg": "dist/dood.iife.js",
-  "module": "dist/dood.js",
+  "browser": "dist/doodjs.iife.js",
+  "unpkg": "dist/doodjs.iife.js",
+  "module": "dist/doodjs.js",
   "exports": {
     ".": {
-      "import": "./dist/dood.js",
-      "require": "./dist/dood.umd.cjs"
+      "import": "./dist/doodjs.js",
+      "require": "./dist/doodjs.umd.cjs"
     }
   },
   "type": "module",

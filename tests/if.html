@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!<!DOCTYPE html>
 <html lang="en">
   <head>
     <title></title>
@@ -7,17 +7,17 @@
     <script src="/dist/dood.iife.js"></script>
   </head>
   <body>
-    <div d-for="i in list">
-      <div d-text="i"></div>
-    </div>
+    <div d-if="count % 2 === 0">count: {{count}} is divideable by 2</div>
+    <div d-else-if="count % 3 === 0">count: {{count}} is divideable by 3</div>
+    <div d-else>count: {{count}} is not divideable by 2 or 3</div>
     <script type="module" d-ignore defer>
-      //import { init, plugin } from "/dist/dood.js";
       let time = performance.now();
       let data = Dood.init({
-        list: new Array(1000).fill(1).map((e, i) => (e = i + 1)),
+        count: 0,
       });
       console.log("init time: ", performance.now() - time);
       window.data = data;
+      setInterval(() => data.count++, 1000);
     </script>
   </body>
 </html>

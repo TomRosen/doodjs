@@ -27,6 +27,7 @@ export const d_for = (context: DirectiveContext) => {
   }
   let iterator: any[];
   let key: string;
+
   createEffect(() => {
     // Get the current iterator and key (if any)
     [iterator, key] = getIteratorAndKey(context.run(`return ${iteratorExpr}`));
