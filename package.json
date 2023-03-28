@@ -1,6 +1,6 @@
 {
   "name": "doodjs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A lightweight client-side JavaScript framework for adding interactivity to HTML markup via element attributes",
   "homepage": "https://github.com/tomrosen/dood#readme",
   "repository": "github:tomrosen/dood",
