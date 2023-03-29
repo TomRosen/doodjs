@@ -2,6 +2,7 @@ import { directives } from "./directives";
 import { createContext } from "./context";
 
 import { Directive, DoodData, DirectiveContext } from "./typedef";
+import { getContexts } from "./helper/getContexts";
 
 let isFor = false;
 
@@ -17,15 +18,22 @@ export const walkDOM = (
       if (main.hasAttribute("d-ignore")) continue;
 
       for (const attr of main.getAttributeNames()) {
-        if (!attr.startsWith("d-") || attr == "d-else-if" || attr == "d-else")
+        if (attr.indexOf("d-") !== 0 || attr == "d-else-if" || attr == "d-else")
           continue;
-        const ctx: DirectiveContext = createContext(main!, attr, dood_data);
+        const ctx: DirectiveContext = createContext(
+          main!,
+          attr,
+          getContexts(main!)
+        );
         const directive: Directive | undefined = directives.find((directive) =>
           attr.startsWith(directive.name)
         );
         if (directive !== undefined) {
           if (directive.name == "d-ref") {
             directive_func.unshift(() => directive!.fn(ctx, dood_data));
+          } else if (directive.name == "d-data") {
+            // to improve
+            directive!.fn(ctx, dood_data);
           } else {
             directive_func.push(() => directive!.fn(ctx, dood_data));
           }

@@ -4,17 +4,19 @@
     <title></title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="/dist/doodjs.iife.js"></script>
+    <!-- <script src="/dist/dood.iife.js"></script> -->
   </head>
   <body>
-    <div d-for="i in list">
-      <div d-text="i"></div>
+    <div d-data="{world: 'World!', count: 0}">
+      <div d-text="hello + world + count"></div>
+      <input type="text" d-model="world" />
+      <button d-on:click="count++">Add</button>
     </div>
     <script type="module" d-ignore defer>
-      //import { init, plugin } from "/dist/dood.js";
+      import { init } from "../src/main.ts";
       let time = performance.now();
-      let data = Dood.init({
-        list: new Array(1000).fill(1).map((e, i) => (e = i + 1)),
+      let data = init({
+        hello: "Hello, ",
       });
       console.log("init time: ", performance.now() - time);
       window.data = data;

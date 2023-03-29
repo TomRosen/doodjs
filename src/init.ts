@@ -1,6 +1,5 @@
 import { walkDOM } from "./walk";
-import { trigger, track } from "./effect";
-
+import { createProxy } from "./helper/createProxy";
 import { DoodData, effect, InitOptions, Plugin } from "./typedef";
 import { addDirective } from "./directives";
 
@@ -11,39 +10,23 @@ export let effect_map: WeakMap<
   Map<string, Set<effect>>
 > = new WeakMap();
 
+export let context_map: WeakMap<Element, Object> = new WeakMap();
+
 export let refs: Map<string, Element> = new Map();
 
 export let dood_data: DoodData = new Object();
 
+export let dood_options: InitOptions;
+
 export const init = (data: Object, options: InitOptions) => {
   effect_map.set(data, new Map());
-  let handler = {
-    get: (target: Object, key: string): any => {
-      if (key === "isProxy") return true;
-      if (
-        target[key as keyof Object] instanceof Object &&
-        // @ts-ignore "should be changed"
-        !target[key as keyof Object]?.isProxy
-      ) {
-        // @ts-ignore
-        target[key as keyof typeof target] = new Proxy(
-          target[key as keyof Object],
-          handler
-        );
-      }
+  dood_options = options || {};
+  dood_options.root = options?.root ?? document.body;
 
-      track(target, key as string);
-      return target[key as keyof Object];
-    },
-    set: (target: Object, key: string, value: any): any => {
-      target[key as keyof Object] = value;
-      trigger(target, key as string);
-      return true;
-    },
-  };
+  dood_data = createProxy(data);
+  context_map.set(dood_options.root, dood_data);
 
-  dood_data = new Proxy(data, handler);
-  walkDOM(options?.root ?? document.body, dood_data);
+  walkDOM(dood_options.root, dood_data);
   return dood_data;
 };
 

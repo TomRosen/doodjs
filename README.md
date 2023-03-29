@@ -8,6 +8,7 @@
     - [Options](#options)
     - [Build from source](#build-from-source)
   - [Directives](#directives)
+    - [`d-data`](#d-data)
     - [`d-text`](#d-text)
     - [`d-html`](#d-html)
     - [`d-show`](#d-show)
@@ -68,9 +69,19 @@ let dood = init({}, { root: "#main" });
 
 - Clone this repository.
 - Run `npm install` and `npm run build`.
-- The script is now available in the `dist/dood.js`.
+- The script is now available in the `dist/` directory.
 
 ## Directives
+
+### `d-data`
+
+Allows to declare a new context. The context / data will be available on the element the directive is attached to and on all child elements.
+
+```html
+<div d-data="{hello: 'world'}">
+  <div d-text="hello"></div>
+</div>
+```
 
 ### `d-text`
 
