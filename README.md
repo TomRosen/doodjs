@@ -125,7 +125,7 @@ Will render list of elements. The loop can contain multiple HTML elements.
 </div>
 ```
 
-`d-for` can also itterate also over the keys of the given object.
+`d-for` can also itterate over the keys of the given object.
 
 ```html
 <div d-for="(item,key) of items"
@@ -187,6 +187,16 @@ Elements with the `d-ignore` directive will be ignored by DoodJS.
 
 ```html
 <div d-ignore></div>
+```
+
+### `inline`
+
+Code inside `{{`/`}}` brackets will automatically be evaluated and is also reactive.
+
+```html
+<div d-data="{message: 'Hello, World!'}"
+    <div>Message: {{message}}</div>
+</div>
 ```
 
 ## DoodJS variables
