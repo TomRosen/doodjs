@@ -12,6 +12,7 @@ import { on } from "./on";
 import { d_for } from "./for";
 import { init } from "./init";
 import { data } from "./data";
+import { inline } from "./inline";
 
 export const directives: Directive[] = [
   {
@@ -56,6 +57,7 @@ export const directives: Directive[] = [
   },
   { name: "d-init", fn: init },
   { name: "d-data", fn: data },
+  { name: "inline", fn: inline },
 ];
 
 export const addDirective = (directive: Directive[]) => {

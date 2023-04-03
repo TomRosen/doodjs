@@ -1,8 +1,8 @@
-import { DirectiveContext } from "./typedef";
-import { run } from "./run";
-import { getAttribute } from "./helper/getAttribute";
+import { DirectiveContext } from "../typedef";
+import { run } from "../run";
+import { getAttribute } from "./getAttribute";
 
-export const createContext = (
+export const createDirectiveContext = (
   el: Element,
   attr: string,
   target: Array<Object>

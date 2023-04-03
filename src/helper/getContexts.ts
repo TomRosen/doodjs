@@ -1,7 +1,8 @@
 import { context_map, dood_options } from "../init";
+import { Context } from "../typedef";
 
 // optimize (function walks more than necessary)
-export function getContexts(el: Element): Object[] {
+export function getContexts(el: Element): Context[] {
   const contexts: Object[] = [];
   let parent: Element | null = el;
 

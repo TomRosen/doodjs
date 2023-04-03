@@ -40,6 +40,10 @@
     <ol d-for="todo in todos">
       <li d-text="todo"></li>
     </ol>
+    <div>
+      Hello, the count is {{count}} that is {{count == 0 ? "not good" : "good"}}
+      ({{count+1}} is the count + 1)
+    </div>
 
     <div id="test">
       <div d-text="test"></div>

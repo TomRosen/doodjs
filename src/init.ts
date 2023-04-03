@@ -1,6 +1,6 @@
 import { walkDOM } from "./walk";
 import { createProxy } from "./helper/createProxy";
-import { DoodData, effect, InitOptions, Plugin } from "./typedef";
+import { Context, effect, InitOptions, Plugin } from "./typedef";
 import { addDirective } from "./directives";
 
 // @ts-ignore
@@ -10,11 +10,11 @@ export let effect_map: WeakMap<
   Map<string, Set<effect>>
 > = new WeakMap();
 
-export let context_map: WeakMap<Element, Object> = new WeakMap();
+export let context_map: WeakMap<Element, Context> = new WeakMap();
 
 export let refs: Map<string, Element> = new Map();
 
-export let dood_data: DoodData = new Object();
+export let dood_data: Context = new Object();
 
 export let dood_options: InitOptions;
 

@@ -1,4 +1,5 @@
 import { trigger, track } from "../effect";
+import { Context } from "../typedef";
 
 const handler = {
   get: (target: Object, key: string): any => {
@@ -24,6 +25,6 @@ const handler = {
     return true;
   },
 };
-export function createProxy(target: Object): Object {
+export function createProxy(target: Object): Context {
   return new Proxy(target, handler);
 }

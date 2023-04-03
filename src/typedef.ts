@@ -1,9 +1,9 @@
 export interface Directive {
   name: string;
-  fn: (ctx: DirectiveContext, target: DoodData) => void;
+  fn: (ctx: DirectiveContext, target: Context) => void;
 }
 
-export interface DoodData {
+export interface Context {
   [key: string]: any;
 }
 
@@ -24,6 +24,7 @@ export interface InitOptions {
   root?: Element;
   onMount?: (el: HTMLElement) => void;
   onUnmount?: (el: HTMLElement) => void;
+  explicitInline?: boolean;
 }
 
 export type effect = () => void;
