@@ -21,7 +21,7 @@
     - [`d-effect`](#d-effect)
     - [`d-ignore`](#d-ignore)
     - [`inline`](#inline)
-  - [DoodJS variables](#doodjs-variables)
+  - [magic variables](#magic-variables)
   - [Modifiers](#modifiers)
   - [Arguments](#arguments)
   <!--toc:end-->
