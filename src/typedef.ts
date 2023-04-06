@@ -1,6 +1,6 @@
 export interface Directive {
   name: string;
-  fn: (ctx: DirectiveContext, target: Context) => void;
+  fn: (ctx: DirectiveContext) => void;
 }
 
 export interface Context {

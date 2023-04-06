@@ -1,11 +1,11 @@
 {
   "name": "doodjs",
   "version": "0.1.0",
-  "description": "A lightweight client-side JavaScript framework for adding interactivity to HTML markup via element attributes",
-  "homepage": "https://github.com/tomrosen/dood#readme",
-  "repository": "github:tomrosen/dood",
+  "description": "A fast and compact client-side JavaScript framework inspired by Vue that adds interactivity to HTML markup via element attributes.",
+  "homepage": "https://github.com/tomrosen/doodjs#readme",
+  "repository": "github:tomrosen/doodjs",
   "bugs": {
-    "url": "https://github.com/TomRosen/dood/issues"
+    "url": "https://github.com/TomRosen/doodjs/issues"
   },
   "license": "MIT",
   "author": "Tom Rosen <dev@tomrosen.de>",

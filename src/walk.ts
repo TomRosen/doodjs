@@ -38,17 +38,13 @@ const getInline = (resolver: any) => {
       (directive) => directive.name == "inline"
     );
     if (directive !== undefined) {
-      inlineDirectiveFuncs.push(() => directive.fn(ctx, {}));
+      inlineDirectiveFuncs.push(() => directive.fn(ctx));
     }
   }
   inlineDirectiveFuncs.forEach((func) => func());
 };
 
-export const walkDOM = (
-  main: Element,
-  dood_data: Context, //proxy
-  checkForInline: boolean = true
-) => {
+export const walkDOM = (main: Element, checkForInline: boolean = true) => {
   const directive_func: Array<Function> = new Array<Function>();
   const loop = function (main: Element | null) {
     do {
@@ -72,12 +68,12 @@ export const walkDOM = (
         );
         if (directive !== undefined) {
           if (directive.name == "d-ref") {
-            directive_func.unshift(() => directive!.fn(ctx, dood_data));
+            directive_func.unshift(() => directive!.fn(ctx));
           } else if (directive.name == "d-data") {
             // to improve
-            directive!.fn(ctx, dood_data);
+            directive!.fn(ctx);
           } else {
-            directive_func.push(() => directive!.fn(ctx, dood_data));
+            directive_func.push(() => directive!.fn(ctx));
           }
         }
         if (directive?.name == "d-for") {
@@ -100,7 +96,6 @@ export const walkDOM = (
   loop(main);
 
   if (checkForInline === true) getInline(main);
-
   for (const func of directive_func) {
     func();
   }

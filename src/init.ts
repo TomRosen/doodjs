@@ -26,7 +26,7 @@ export const init = (data: Object, options: InitOptions) => {
   dood_data = createProxy(data);
   context_map.set(dood_options.root, dood_data);
 
-  walkDOM(dood_options.root, dood_data);
+  walkDOM(dood_options.root);
   return dood_data;
 };
 

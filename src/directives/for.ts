@@ -1,7 +1,6 @@
 import { DirectiveContext } from "../typedef";
 import { createEffect } from "../effect";
 import { walkDOM } from "../walk";
-import { dood_data } from "../init";
 
 const forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
 const aliasKeyRE = /(?:\()?(.*?)(?:\))?,([^),]*)/;
@@ -49,7 +48,7 @@ export const d_for = (context: DirectiveContext) => {
         fragment.appendChild(newEl);
       }
 
-      walkDOM(fragment.children[i], dood_data);
+      walkDOM(fragment.children[i]);
     }
 
     el.appendChild(fragment);

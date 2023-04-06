@@ -20,6 +20,7 @@
     - [`d-ref`](#d-ref)
     - [`d-effect`](#d-effect)
     - [`d-ignore`](#d-ignore)
+    - [`inline`](#inline)
   - [DoodJS variables](#doodjs-variables)
   - [Modifiers](#modifiers)
   - [Arguments](#arguments)
@@ -75,7 +76,7 @@ let dood = init({}, { root: "#main" });
 
 ### `d-data`
 
-Allows to declare a new context. The context / data will be available on the element the directive is attached to and on all child elements.
+Allows to declare a new context. The data will be available on the element the directive is attached to and on all child elements.
 
 ```html
 <div d-data="{hello: 'world'}">
@@ -85,7 +86,7 @@ Allows to declare a new context. The context / data will be available on the ele
 
 ### `d-text`
 
-Will set given value as elements innerText.
+Will set the given value as elements innerText.
 
 ```html
 <div d-text="'Hello, World!'"></div>
@@ -93,7 +94,7 @@ Will set given value as elements innerText.
 
 ### `d-html`
 
-Will set given value as elements innerHTML.
+Will set the given value as elements innerHTML.
 
 ```html
 <div d-html="myHTML"></div>
@@ -117,7 +118,7 @@ Will bind the value of the input to the value of the given variable.
 
 ### `d-for`
 
-Will render list of elements. The loop can contain multiple HTML elements.
+Will render a list of elements, `d-for` can contain multiple HTML elements.
 
 ```html
 <div d-for="item of items">
@@ -156,7 +157,7 @@ Modifiers and Arguments are supported.
 
 ### `d-bind`
 
-Will bind given value the specefied propertie of the element.
+Will bind the given value the specefied property of the element.
 
 ```html
 <div d-bind:class="class"></div>
@@ -166,7 +167,7 @@ Will bind given value the specefied propertie of the element.
 ### `d-ref`
 
 Will add the element to the `refs`.\
-Element will be available via `$refs.tag`.
+Element will be available via `$refs`.
 
 ```html
 <div d-ref="tag"></div>
@@ -175,7 +176,7 @@ Element will be available via `$refs.tag`.
 
 ### `d-effect`
 
-Will re-run the effect when the value of parameters changes.
+Will re-run the effect when a value in the expression changes.
 
 ```html
 <div d-effect="$el.innerText = message"></div>
@@ -183,7 +184,7 @@ Will re-run the effect when the value of parameters changes.
 
 ### `d-ignore`
 
-Elements with the `d-ignore` directive will be ignored by DoodJS.
+Elements with the `d-ignore` directive will be ignored during initialization.
 
 ```html
 <div d-ignore></div>
@@ -199,7 +200,7 @@ Code inside `{{`/`}}` brackets will automatically be evaluated and is also react
 </div>
 ```
 
-## DoodJS variables
+## magic variables
 
 There are a list of variables that are available in all directive functions.
 
