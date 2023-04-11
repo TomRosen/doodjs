@@ -45,6 +45,7 @@ const getInline = (resolver: any) => {
 };
 
 export const walkDOM = (main: Element, checkForInline: boolean = true) => {
+  isFor = false;
   const directive_func: Array<Function> = new Array<Function>();
   const loop = function (main: Element | null) {
     do {

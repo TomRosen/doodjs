@@ -7,15 +7,21 @@
     <!-- <script src="/dist/doodjs.iife.js"></script> -->
   </head>
   <body>
-    <div d-for="i in list">
-      <div>{{i}}</div>
-      <!-- <div d-text="i"></div> -->
+    <div d-for="item in list">
+      <!-- <div>{{i}}</div> -->
+      <li>
+        <div d-text="item.id"></div>
+        <div d-text="item.label"></div>
+      </li>
     </div>
     <script type="module" d-ignore defer>
       import { init, plugin } from "/src/main.ts";
       let time = performance.now();
       let data = init({
-        list: new Array(1000).fill(1).map((e, i) => (e = i + 1)),
+        list: new Array(10)
+          .fill(1)
+          .map((e, i) => (e = { id: i, label: "item" + i })),
+        //list: [],
       });
       console.log("init time: ", performance.now() - time);
       window.data = data;

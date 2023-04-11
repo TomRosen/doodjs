@@ -31,7 +31,10 @@ A simple JavaScript framework to add functionality to your HTML elements.
 ## State
 
 - The framework is currently in a very early state.
-- Different scopes are currently not supported yet, just one scope will be created.
+
+### Known issues
+
+- `inline` doesn't work correctly inside `d-for`
 
 ## Usage
 
