@@ -1,6 +1,6 @@
 {
   "name": "doodjs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A fast and compact client-side JavaScript framework inspired by Vue that adds interactivity to HTML markup via element attributes.",
   "homepage": "https://github.com/tomrosen/doodjs#readme",
   "repository": "github:tomrosen/doodjs",
