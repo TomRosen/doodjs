@@ -12,6 +12,8 @@ dist
 dist-ssr
 local
 *.local
+css
+tests/bench
 
 # Editor directories and files
 .vscode/*

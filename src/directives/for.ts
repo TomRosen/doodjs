@@ -6,7 +6,7 @@ const forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
 const aliasKeyRE = /(?:\()?(.*?)(?:\))?,([^),]*)/;
 
 export const d_for = (context: DirectiveContext) => {
-  const { el, expr, run } = context;
+  const { el, expr, run, contexts } = context;
 
   const childNodes = Array.from(el.childNodes);
   if (!childNodes.length) {
@@ -48,7 +48,7 @@ export const d_for = (context: DirectiveContext) => {
         fragment.appendChild(newEl);
       }
 
-      walkDOM(fragment.children[i]);
+      walkDOM(fragment.children[i], { parentContexts: contexts });
     }
 
     el.appendChild(fragment);

@@ -4,6 +4,7 @@
 
 - [DoodJS](#doodjs)
   - [State](#state)
+    - [Known issues](#known-issues)
   - [Usage](#usage)
     - [Options](#options)
     - [Build from source](#build-from-source)
@@ -33,8 +34,6 @@ A simple JavaScript framework to add functionality to your HTML elements.
 - The framework is currently in a very early state.
 
 ### Known issues
-
-- `inline` doesn't work correctly inside `d-for`
 
 ## Usage
 

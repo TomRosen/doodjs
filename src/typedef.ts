@@ -12,12 +12,19 @@ export interface DirectiveContext {
   expr: string;
   arg?: string;
   modifiers?: string[];
+  contexts: Array<Context>;
   run: (expression?: string, args?: Array<any>) => any;
 }
 
 export interface Plugin {
   name: string;
   directives: Directive[];
+}
+
+export interface WalkOptions {
+  parentContexts?: Array<Context>;
+  explicitInline?: boolean;
+  checkForInline?: boolean;
 }
 
 export interface InitOptions {

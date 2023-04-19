@@ -1,11 +1,12 @@
 import { directives } from "./directives";
 import { createDirectiveContext } from "./helper/createDirectiveContext";
 
-import { Directive, DirectiveContext, Context } from "./typedef";
+import { Directive, DirectiveContext, WalkOptions } from "./typedef";
 import { getContexts } from "./helper/getContexts";
 
 const inlineIgnore: Array<Element> = new Array<Element>();
 let isFor = false;
+let walkOptions: WalkOptions = {};
 
 const getInline = (resolver: any) => {
   const regex = /{{.*}}/; // /{{.*}}/g
@@ -32,7 +33,7 @@ const getInline = (resolver: any) => {
     const ctx: DirectiveContext = createDirectiveContext(
       currentElement as Element,
       "inline",
-      getContexts(currentElement as Element)
+      getContexts(currentElement as Element, walkOptions?.parentContexts)
     );
     const directive: Directive | undefined = directives.find(
       (directive) => directive.name == "inline"
@@ -44,8 +45,9 @@ const getInline = (resolver: any) => {
   inlineDirectiveFuncs.forEach((func) => func());
 };
 
-export const walkDOM = (main: Element, checkForInline: boolean = true) => {
+export const walkDOM = (main: Element, options: WalkOptions = {}) => {
   isFor = false;
+  walkOptions = options;
   const directive_func: Array<Function> = new Array<Function>();
   const loop = function (main: Element | null) {
     do {
@@ -62,8 +64,9 @@ export const walkDOM = (main: Element, checkForInline: boolean = true) => {
         const ctx: DirectiveContext = createDirectiveContext(
           main!,
           attr,
-          getContexts(main!)
+          getContexts(main!, walkOptions?.parentContexts)
         );
+
         const directive: Directive | undefined = directives.find((directive) =>
           attr.startsWith(directive.name)
         );
@@ -79,7 +82,7 @@ export const walkDOM = (main: Element, checkForInline: boolean = true) => {
         }
         if (directive?.name == "d-for") {
           //put all the children of the d-for element in the ignore list
-          const children = main.children;
+          const children = main.querySelectorAll("*");
           for (let i = 0; i < children.length; i++) {
             inlineIgnore.push(children[i]);
           }
@@ -96,7 +99,7 @@ export const walkDOM = (main: Element, checkForInline: boolean = true) => {
 
   loop(main);
 
-  if (checkForInline === true) getInline(main);
+  if (options?.checkForInline !== false) getInline(main);
   for (const func of directive_func) {
     func();
   }
