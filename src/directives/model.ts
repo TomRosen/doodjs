@@ -7,7 +7,7 @@ export const model = ({ el, run, expr }: DirectiveContext) => {
     el.addEventListener("input", (e: Event) => {
       const value = (e.target as HTMLInputElement).value;
       // target[expr] = value;
-      run(`${expr} = '${value}'`);
+      run(`${expr} = '${value}'`); // to be optimized, because functions may not be cached
     });
   } else {
     console.error(`Property ${expr}, in model, does not exist in target`);

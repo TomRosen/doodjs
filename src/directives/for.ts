@@ -1,6 +1,7 @@
-import { DirectiveContext } from "../typedef";
+import { DirectiveContext, Context } from "../typedef";
 import { createEffect } from "../effect";
 import { walkDOM } from "../walk";
+import { EffectMap } from "../init";
 
 const forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
 const aliasKeyRE = /(?:\()?(.*?)(?:\))?,([^),]*)/;
@@ -8,8 +9,9 @@ const aliasKeyRE = /(?:\()?(.*?)(?:\))?,([^),]*)/;
 export const d_for = (context: DirectiveContext) => {
   const { el, expr, run, contexts } = context;
 
-  const childNodes = Array.from(el.childNodes);
-  if (!childNodes.length) {
+  // const children = Array.from(el.childNodes);
+  const children = Array.from(el.children);
+  if (!children.length) {
     throw new Error(`d-for element must have child nodes`);
   }
 
@@ -19,39 +21,34 @@ export const d_for = (context: DirectiveContext) => {
   }
   const [, alias, iteratorExpr] = parsed;
 
-  const aliasParsed = alias.match(aliasKeyRE);
-  if (aliasParsed !== null) {
-    var [, valueAlias, keyAlias] = aliasParsed;
-    run(`keys = ${iteratorExpr}.keys()`);
-  }
   let iterator: any[];
   let key: string;
 
   createEffect(() => {
+    console.time("d-for");
     // Get the current iterator and key (if any)
-    [iterator, key] = getIteratorAndKey(context.run(`return ${iteratorExpr}`));
+    [iterator, key] = getIteratorAndKey(run(`return ${iteratorExpr}`));
 
-    const fragment = document.createDocumentFragment();
+    let fragment = document.createDocumentFragment();
 
     el.textContent = "";
 
     const length = iterator.length;
     for (var i = 0; i < length; i++) {
-      // Set the context for the new element
-      run(`${valueAlias || alias} = ${iteratorExpr}[$args[0]]`, [i]);
-      if (keyAlias) {
-        run(`${keyAlias} = keys.next().value`, [i]);
-      }
-
-      for (const node of childNodes) {
+      for (const node of children) {
         const newEl = node.cloneNode(true);
+
         fragment.appendChild(newEl);
       }
 
-      walkDOM(fragment.children[i], { parentContexts: contexts });
+      walkDOM(fragment.children[i], {
+        parentContexts: [...contexts, { [alias]: iterator[i] }],
+        checkForInline: false,
+      });
     }
 
     el.appendChild(fragment);
+    console.timeEnd("d-for");
   });
 };
 

@@ -1,8 +1,8 @@
-import { DirectiveContext } from "../typedef";
-import { context_map } from "../init";
-import { createProxy } from "../helper/createProxy";
+import { DirectiveContext } from '../typedef';
+import { ContextMap } from '../init';
+import { createProxy } from '../helper/createProxy';
 
 export const data = ({ run, el, expr }: DirectiveContext) => {
-  const data = run(`return ${expr}`);
-  context_map.set(el, createProxy(data));
+	const data = run(`return ${expr}`);
+	ContextMap.set(el, createProxy(data));
 };

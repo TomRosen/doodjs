@@ -1,11 +1,16 @@
-import { directives } from "./directives";
+import { directives, directivesToIgnore } from "./directives";
 import { createDirectiveContext } from "./helper/createDirectiveContext";
 
-import { Directive, DirectiveContext, WalkOptions } from "./typedef";
+// import {
+//   Directive,
+//   DirectiveContext,
+//   WalkOptions,
+//   DirectiveInitOrder,
+// } from "./typedef";
 import { getContexts } from "./helper/getContexts";
 
-const inlineIgnore: Array<Element> = new Array<Element>();
-let isFor = false;
+const inlineIgnore: Array<Element> = new Array<Element>(); // keeps track of elements with d-ignore to disable inline code
+let isFor = false; // keeps track of whether the current element is a d-for element in order to not initialize directives on its children
 let walkOptions: WalkOptions = {};
 
 const getInline = (resolver: any) => {
@@ -49,6 +54,7 @@ export const walkDOM = (main: Element, options: WalkOptions = {}) => {
   isFor = false;
   walkOptions = options;
   const directive_func: Array<Function> = new Array<Function>();
+
   const loop = function (main: Element | null) {
     do {
       if (main === null || main === undefined) return;
@@ -59,8 +65,9 @@ export const walkDOM = (main: Element, options: WalkOptions = {}) => {
       }
 
       for (const attr of main.getAttributeNames()) {
-        if (attr.indexOf("d-") !== 0 || attr == "d-else-if" || attr == "d-else")
+        if (attr.indexOf("d-") !== 0 || directivesToIgnore.includes(attr))
           continue;
+
         const ctx: DirectiveContext = createDirectiveContext(
           main!,
           attr,
@@ -70,19 +77,25 @@ export const walkDOM = (main: Element, options: WalkOptions = {}) => {
         const directive: Directive | undefined = directives.find((directive) =>
           attr.startsWith(directive.name)
         );
+
         if (directive !== undefined) {
-          if (directive.name == "d-ref") {
-            directive_func.unshift(() => directive!.fn(ctx));
-          } else if (directive.name == "d-data") {
-            // to improve
-            directive!.fn(ctx);
-          } else {
-            directive_func.push(() => directive!.fn(ctx));
+          switch (directive.initOrder) {
+            case "BEFORE":
+              directive_func.unshift(() => directive!.fn(ctx));
+              break;
+            case "IMMEDIATE":
+              directive!.fn(ctx);
+              break;
+            default:
+              directive_func.push(() => directive!.fn(ctx));
+              break;
           }
         }
         if (directive?.name == "d-for") {
+          // should be improved
           //put all the children of the d-for element in the ignore list
           const children = main.querySelectorAll("*");
+          inlineIgnore.push(...Array.from(children));
           for (let i = 0; i < children.length; i++) {
             inlineIgnore.push(children[i]);
           }

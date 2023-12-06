@@ -1,13 +1,23 @@
-export interface Directive {
+// declare const enum DirectiveInitOrder {
+//   DEFAULT,
+//   BEFORE,
+//   IMMEDIATE,
+// }
+// const enums seem to be broken, because when building the enums are not replaced and the code is not valid
+
+declare type DirectiveInitOrder = "DEFAULT" | "BEFORE" | "IMMEDIATE";
+
+declare interface Directive {
   name: string;
   fn: (ctx: DirectiveContext) => void;
+  initOrder: DirectiveInitOrder;
 }
 
-export interface Context {
+declare interface Context {
   [key: string]: any;
 }
 
-export interface DirectiveContext {
+declare interface DirectiveContext {
   el: Element;
   expr: string;
   arg?: string;
@@ -16,22 +26,22 @@ export interface DirectiveContext {
   run: (expression?: string, args?: Array<any>) => any;
 }
 
-export interface Plugin {
+declare interface Plugin {
   name: string;
   directives: Directive[];
 }
 
-export interface WalkOptions {
-  parentContexts?: Array<Context>;
-  explicitInline?: boolean;
-  checkForInline?: boolean;
+declare interface WalkOptions {
+  parentContexts?: Array<Context>; // contexts available to all directives that will be initialized
+  explicitInline?: boolean; // if true, will only check for inline code if specified with directive
+  checkForInline?: boolean; // if true, will check for inline code
 }
 
-export interface InitOptions {
+declare interface InitOptions {
   root?: Element;
   onMount?: (el: HTMLElement) => void;
   onUnmount?: (el: HTMLElement) => void;
   explicitInline?: boolean;
 }
 
-export type effect = () => void;
+declare type effect = () => void;

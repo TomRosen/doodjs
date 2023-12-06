@@ -28,7 +28,10 @@
       d-bind:class="['divider', 'divider-2']"
       d-text="arr"
     ></div>
-    <div d-data="{test: 'data', testNumber: 9}"></div>
+    <div d-data="{test: 'data', testNumber: 9}">
+      <div d-text="test"></div>
+      <div d-text="testNumber"></div>
+    </div>
     <input
       type="text"
       d-model="inputText"

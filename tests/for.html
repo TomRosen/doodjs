@@ -7,25 +7,42 @@
     <!-- <script src="/dist/doodjs.iife.js"></script> -->
   </head>
   <body>
+    <button d-on:click="change()">change</button>
     <div d-for="item in list">
       <li>
         <!-- <div d-text="item.id"></div> -->
-        <div>{{greeting}}</div>
-        <div d-text="item.label"></div>
+        <div d-inline>{{greeting}}</div>
+        <div d-text="item"></div>
         <div d-text="greeting"></div>
+        <div>-------</div>
+        <div>-------</div>
+        <div>-------</div>
+        <div>-------</div>
       </li>
     </div>
     <script type="module" d-ignore defer>
       import { init, plugin } from "/src/main.ts";
       let time = performance.now();
-      let data = init({
-        list: new Array(1000)
-          .fill(0)
-          .map((e, i) => (e = { id: i, label: "item" + i })),
-        //list: [],
-        greeting: "Hello World",
-      });
+      let data = init(
+        {
+          list: new Array(10000).fill(0).map((e, i) => (e = i)),
+          //list: [],
+          greeting: "Hello World",
+          change() {
+            console.log("change");
+            for (let i = 0; i < this.list.length; i += 10) {
+              this.list[i] += 1;
+            }
+          },
+        },
+        { explicitInline: true }
+      );
       console.log("init time: ", performance.now() - time);
+      /*for (let i = 0; i < 10; i++) {
+        console.time("render");
+        data.list = new Array(10000).fill(0).map((e, i) => (e = Math.random()));
+        console.timeEnd("render");
+      }*/
       window.data = data;
     </script>
   </body>
