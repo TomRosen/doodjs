@@ -8,7 +8,7 @@ export const run = (
   target: Array<Object>,
   expr: string,
   args: Array<any> = [],
-  el?: Element
+  el?: Element,
 ) => {
   const fn =
     fn_cache[expr] || (fn_cache[expr] = createFunction(expr, target?.length));
@@ -34,7 +34,7 @@ function createFunction(expr: string, contextCount: number): Function {
       `$el`,
       `$args`,
       // `with($data){${expr}}`
-      expr
+      expr,
     );
   } catch (e) {
     console.error(`${(e as Error).message} in expression: ${expr}`);

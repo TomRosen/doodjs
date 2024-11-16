@@ -45,3 +45,5 @@ declare interface InitOptions {
 }
 
 declare type effect = () => void;
+
+declare type AttributeEffectMap = Map<string, Set<effect>>;

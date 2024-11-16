@@ -22,15 +22,22 @@ export const d_if = (ctx: DirectiveContext) => {
   const conditionContexts: ConditionContext[] = [{ el, expr: expr }];
   let elseEl: Element | null = null;
   while ((elseEl = el.nextElementSibling)) {
-    if (elseEl.hasAttribute("d-else") || elseEl.hasAttribute("d-else-if")) {
-      conditionContexts.push({
-        el: elseEl,
-        expr: getAttribute(elseEl, "d-else-if"),
-      });
-      parent.removeChild(elseEl);
+    if (elseEl.hasAttribute("d-else-if")) {
+      var conditionExpr = getAttribute(elseEl, "d-else-if");
+      if (!elseEl.hasAttribute("d-else") && conditionExpr.trim() === "") {
+        console.error(`Expression in else-if directive is empty`);
+        return;
+      }
+    } else if (elseEl.hasAttribute("d-else")) {
+      var conditionExpr = getAttribute(elseEl, "d-else");
     } else {
       break;
     }
+    conditionContexts.push({
+      el: elseEl,
+      expr: conditionExpr,
+    });
+    parent.removeChild(elseEl);
   }
 
   let activeConditionContext: number = -1;
